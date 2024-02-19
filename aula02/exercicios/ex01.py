@@ -70,21 +70,40 @@ class Stocks:
             (float): média dos preços de fechamento de uma ação específica.
         """
         
-        values = self.get_prices(code)
+        prices = self.get_prices(code)
         sum = 0
         
-        for value in values:
-            sum += value.closing_price
+        for price in prices:
+            sum += price.closing_price
             
-        return (sum / len(values))
+        return (sum / len(prices))
     
-    def recent_prices(self, code:str, date:str):
-        pass
+    def recent_prices(self, code:str, date:tuple):
+        """
+        Retorna uma lista com os preços de fechamento de uma ação específica a partir da data date.
+
+        Args:
+            code (str): código da ação. Ex: "GOOG"
+            date (tuple): data de fechamento da ação, tupla no formato (ano, mês, dia). Exemplo: (2003, 04, 30)
+
+        Returns:
+            (list): lista com os preços de fechamento de uma ação específica a partir da data date.
+        """
+        pricesToReturn = []
+        for price in self.get_prices(code):       
+            if datetime.date(*(price.date)) >= datetime.date(*date):
+                pricesToReturn.append(price)
+        return pricesToReturn
     
 stocks1 = Stocks()
 stocks1.add("GOOG", (2024, 5, 1), 150.2)
 stocks1.add("GOOG", (2024, 5, 2), 151.2)
 stocks1.add("TTWO", (2024, 3, 1), 140.0)
+
 print(stocks1.get_prices("GOOG"))
+
 print(stocks1.average_price("GOOG"))
+
 print(stocks1.get_all_stocks())
+
+print(stocks1.recent_prices("GOOG", (2024, 5, 2)))
