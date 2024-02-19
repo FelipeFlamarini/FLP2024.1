@@ -25,7 +25,7 @@ class Stocks:
         average_price\n
         recent_prices\n
         """
-        self._stocks = defaultdict(lambda : [])
+        self._stocks = defaultdict(list)
     
     def add(self, code:str, date:tuple, closing_price:float):
         """
@@ -70,13 +70,8 @@ class Stocks:
             (float): média dos preços de fechamento de uma ação específica.
         """
         
-        prices = self.get_prices(code)
-        sum = 0
-        
-        for price in prices:
-            sum += price.closing_price
-            
-        return (sum / len(prices))
+        prices = [price for _, price in self._stocks[code]]
+        return sum(prices) / len(prices) if prices else None
     
     def recent_prices(self, code:str, date:tuple):
         """
@@ -89,11 +84,7 @@ class Stocks:
         Returns:
             (list): lista com os preços de fechamento de uma ação específica a partir da data date.
         """
-        pricesToReturn = []
-        for price in self.get_prices(code):       
-            if datetime.date(*(price.date)) >= datetime.date(*date):
-                pricesToReturn.append(price)
-        return pricesToReturn
+        return [price for price in self.get_prices(code) if datetime.date(*(price.date)) >= datetime.date(*date)]
     
 stocks1 = Stocks()
 stocks1.add("GOOG", (2024, 5, 1), 150.2)
