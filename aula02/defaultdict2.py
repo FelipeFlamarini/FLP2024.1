@@ -15,3 +15,4 @@ d["bugiganga"][1] = "quinquilharia"
 d["bizu"][1] = "ideia"
  
 print(f'gororoba significa {d["gororoba"][1]}, e foi a {d["gororoba"][0]}ª palavra a ser adicionada neste dicionário.')
+print(d)
