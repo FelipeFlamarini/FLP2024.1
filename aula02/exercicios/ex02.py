@@ -10,16 +10,20 @@
 # get_all_words(): Retorna uma lista com todas as palavras presentes no dicionário, na ordem em que 
 # foram adicionadas/modificadas.
 from collections import defaultdict, namedtuple
-import datetime
 
 class dictionary:
     _wordDefinition = namedtuple("wordDefinition", ("definition", "lastUpdated"))
+    _update = 0
     
     def __init__(self):
-        self._words = defaultdict(lambda : self._wordDefinition(0, datetime.datetime.now()))
+        self._words = defaultdict(lambda : self._wordDefinition(0, self._updateCounter()))
+        
+    def _updateCounter(self):
+        self._update += 1
+        return self._update
             
     def set(self, word : str, definition : str):
-        self._words[word.lower()] = self._wordDefinition(definition, datetime.datetime.now())
+        self._words[word.lower()] = self._wordDefinition(definition, self._updateCounter())
     
     def get(self, word : str):
         return self._words[word].definition if self._words[word].definition != 0 else "Essa palavra não existe nesse dicionário."
@@ -43,7 +47,6 @@ dictionary1.set("gororoba", "comida duvidosa")
 print(dictionary1.get("pindaíba"))
 print(dictionary1.get("gororoba"))
 print(dictionary1.get("abc"))
-
 
 print(dictionary1.get_word_order("pindaíba"))
 print(dictionary1.get_word_order("bizu"))
