@@ -34,15 +34,18 @@ class Election:
         self._candidates = defaultdict(lambda : {"candidate": "", "votes": 0})
         self._candidates[0]["candidate"] = "Nulo"
         
+    def _getVotes(self, party : int):
+        return self._candidates[party]["votes"]
+        
     def _getAllVotes(self):
         votes = [parties for parties in sorted(list(self._candidates.items()), key=lambda x : (-x[1]["votes"], x[1]["candidate"], x[1]["candidate"] == "Nulo"))]
         # resolve primeiro ou segundo turno
         # se há segundo turno (número de votos do maior colocado > 50%), o primeiro elemento da list é true
         # se não, false
-        if votes[0][1]["votes"] > len(votes) / 2:
-            votes.insert(0, True)
-        else:
+        if ((float(votes[0][1]["votes"] - self._getVotes(0))) > (len(votes) / 2)):
             votes.insert(0, False)
+        else:
+            votes.insert(0, True)
         return votes    
     
     def _incrementVote(self, party : int):
@@ -84,7 +87,6 @@ class Election:
             print("COM SEGUNDO TURNO")
         else:
             print("SEM SEGUNDO TURNO")
-        print(result)
             
 election1 = Election()
 election1.startRegistering()
