@@ -29,9 +29,7 @@ class dictionary:
         return self._words[word].definition if self._words[word].definition != 0 else "Essa palavra não existe nesse dicionário."
     
     def get_word_order(self, word : str):
-        for index, wordSearch in enumerate(self.get_all_words()):
-            if wordSearch == word:
-                return index
+        return self._words[word].lastUpdated
     
     def get_all_words(self):
         return [word[0] for word in sorted(self._words.items(), key=lambda e : e[1].lastUpdated) if word[1].definition != 0]
