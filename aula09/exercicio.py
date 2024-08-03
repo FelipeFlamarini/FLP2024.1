@@ -33,5 +33,5 @@ for n_arquivo in range(n_arquivos_texto):
                 if caracter in caracteres_precificados.keys():
                     valores_artigos[n_arquivo] += caracteres_precificados[caracter]
 
-for i in range(len(valores_artigos)):
-    print(f"R${str(valores_artigos[i]/100).replace(".", ",")}")
+for valor in valores_artigos:
+    print(f"R${str(valor/100).replace(".", ",")}")
