@@ -1,12 +1,5 @@
 from collections import defaultdict
 
-
-## funções
-def replace_nth(string: str, sub: str, n: int) -> str:
-    string.find
-
-
-## resolvendo exercício
 ## recebendo palavras ignoradas
 palavras_ignoradas = set()
 
@@ -28,7 +21,7 @@ while True:
 
 ## criando json com as palavras-chave
 ## key: palavra-chave
-## valor: set[titulos]
+## valor: list[titulos]
 palavras_chave = defaultdict(list)
 
 for titulo in titulos_input:
@@ -44,13 +37,10 @@ for palavra_chave in sorted(palavras_chave.keys()):
         if palavra_chave_count < 1:
             print(titulo.replace(palavra_chave, palavra_chave.upper()))
             break
-        ## quando há mais de uma palavra-chave igual no mesmo título5
-        titulo_last = 0
+        ## quando há mais de uma palavra-chave igual no mesmo título
+        titulo_last = 0 ## índice da última ocorrência da palavra-chave no título
         for i in range(palavra_chave_count):
             titulo_last += titulo.find(palavra_chave, titulo_last)
             print(
-                titulo[:titulo_last]
-                + (titulo[titulo_last:]).replace(
-                    palavra_chave, palavra_chave.upper(), 1
-                )
+                titulo[:titulo_last] + (titulo[titulo_last:]).replace(palavra_chave, palavra_chave.upper(), 1)
             )
