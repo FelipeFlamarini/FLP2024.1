@@ -1,6 +1,4 @@
 ## recebendo palavras ignoradas
-import sys
-
 palavras_ignoradas = set()
 
 while True:
